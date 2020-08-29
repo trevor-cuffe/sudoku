@@ -58,12 +58,12 @@ function setUpTable() {
 //fill game table with numbers
 function fillTable() {
 
-    for(let i=1; i<=9; i++) {
+    for(let i=0; i<=8; i++) {
 
         let numbers = [];
         numbers.fillRange(1,9);
 
-        for(let j=1; j<=9; j++) {
+        for(let j=0; j<=8; j++) {
             let index = randInt(0,numbers.length-1)
             setCellValue(i,j,numbers[index]);
             numbers.splice(index,1);
@@ -220,7 +220,7 @@ function formatError(userCell,errorCells) {
 
 //set cell value: use 1-9, 1-9 input for grid index
 function setCellValue(row,col,val) {
-    if (val < 0 || val > 8 || !Number.isInteger(val)) {console.log("setCellValue error: unexpected value entered"); return; }
+    if (val < 1 || val > 9 || !Number.isInteger(val)) {console.log("setCellValue error: unexpected value entered"); return; }
 
     const cell = getCell(row,col)
     if(cell) {
@@ -252,11 +252,11 @@ function getCell(row,col) {
 }
 
 function getCellRow(cell) {
-    return cell.parentNode.rowIndex+1;
+    return cell.parentNode.rowIndex;
 }
 
 function getCellCol(cell) {
-    return cell.cellIndex+1;
+    return cell.cellIndex;
 }
 
 //Random Integer
