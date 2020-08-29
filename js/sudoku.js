@@ -173,7 +173,7 @@ function checkForErrors(row,col,value=null) {
     let errorCells = [];
 
     //check row & col value
-    for (let i=1; i<=9; i++) {
+    for (let i=0; i<=8; i++) {
         //use i to iterate through row and column at same time.
         //If checking the value of (row, col), set comparison value to null
         //so that you don't trigger an error by comparing with itself
@@ -192,11 +192,11 @@ function checkForErrors(row,col,value=null) {
     }
 
     //check 3x3 grid (box) value
-    boxRow = Math.floor((row-1)/3)+1; //1,1,1,2,2,2,3,3,3
-    boxCol = Math.floor((col-1)/3)+1; //1,1,1,2,2,2,3,3,3
+    boxRow = Math.floor(row/3); //0,0,0,1,1,1,2,2,2
+    boxCol = Math.floor(col/3); //0,0,0,1,1,1,2,2,2
 
-    for (let i=boxRow*3-2; i<=boxRow*3; i++) {
-        for (let j=boxCol*3-2; j<=boxCol*3; j++) {
+    for (let i=boxRow*3; i<=boxRow*3+2; i++) {
+        for (let j=boxCol*3; j<=boxCol*3+2; j++) {
             let checkBoxValue = (i===row && j===col) ? null:getCellValue(i,j);
             if (value === checkBoxValue) {
                 console.log("cell match error: " + i + ", " + j);
@@ -220,7 +220,7 @@ function formatError(userCell,errorCells) {
 
 //set cell value: use 1-9, 1-9 input for grid index
 function setCellValue(row,col,val) {
-    if (val < 1 || val > 9 || !Number.isInteger(val)) {console.log("setCellValue error: unexpected value entered"); return; }
+    if (val < 0 || val > 8 || !Number.isInteger(val)) {console.log("setCellValue error: unexpected value entered"); return; }
 
     const cell = getCell(row,col)
     if(cell) {
@@ -244,8 +244,7 @@ function clearCell(row,col) {
 function getCell(row,col) {
     //returns an optional cell (td)
     //includes error handling and adjustment for row and col
-    //adjust row and col values to use 1-9 input instead of 0-8
-    row -= 1; col -= 1;
+
     //error handling
     if (!gameTable.rows[row] || !gameTable.rows[row].cells[col]) {console.log("getCell error: cell is outside of table range"); return; }
 
