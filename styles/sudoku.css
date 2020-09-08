@@ -1,18 +1,66 @@
-html {
+:root {
+    --borderColor: black;
+    --innerBorderColor: gray;
 
+    --cellHoverColor: #d1e1ff;
+    --cellSelectColor: #b1d1ff;
+    --cellRelatedColor: #e1e4ec;
+    --cellMatchColor: #c1d1ff;
+
+    --userValueColor: #3232aa;
+    --notesColor: #595959;
+
+    --errorBGColor: #ff8888;
+    --errorBGHoverColor: #ffbbbb;
 }
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --borderColor: white;
+        --innerBorderColor: lightgray;
+
+        --cellHoverColor: #222266;
+        --cellSelectColor: #444488;
+        --cellRelatedColor: #333333;
+        --cellMatchColor: #554488;
+
+        --userValueColor: #aadbaa;
+        --notesColor: #d9d9d9;
+        
+        --errorBGColor: #660000;
+        --errorBGHoverColor: #883333;
+    }
+
+    html{
+        background-color: black;
+        color: white;
+    }
+}
+
+
 
 h1 {
     text-align: center;
 }
 
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-vertical {
+    flex-direction: column;
+}
+
+
 .gameTable {
-    width: 500px;
-    height: 500px;
+    width: 600px;
+    height: 600px;
     border-collapse: collapse;
-    border: 2px solid black;
+    border: 2px solid var(--borderColor);
     padding: 0;
-    margin: 0 auto;
+    margin: 10px 50px;
 }
 
 .gameRow {
@@ -23,32 +71,60 @@ h1 {
 
 
 .gameRow:nth-of-type(3n+4) {
-    border-top: 2px solid black;
+    border-top: 2px solid var(--borderColor);
 }
 
 .gameCell {
     box-sizing: border-box;
     position: relative;
     width: 11.111%;
-    border: 1px solid gray;
+    border: 1px solid var(--innerBorderColor);
     margin: 0;
 }
 
 .gameRow .gameCell:nth-of-type(3n+4) {
-    border-left: 2px solid black;
+    border-left: 2px solid var(--borderColor);
 }
+
+
+/* Variable Cell Styles */
 
 .gameCell:hover {
-    background-color: #d1e1ff;
+    background-color: var(--cellHoverColor);
 }
 
-.gameCell.selectedCell {
-    background-color: #b1d1ff;
+.matchingCell {
+    background-color: var(--cellMatchColor);
 }
 
 .relatedCell {
-    background-color: #e1e4ec;
+    background-color: var(--cellRelatedColor);
 }
+
+.userValue {
+    color: var(--userValueColor);
+}
+
+.errorValue {
+    background-color: var(--errorBGColor);
+}
+
+.errorValue.userValue {
+    color: red;
+}
+
+.errorValue:hover {
+    background-Color: var(--errorBGHoverColor);
+}
+
+.selectedCell {
+    background-color: var(--cellSelectColor);
+}
+
+
+
+/* Inner Cell Setup */
+
 
 .cellValue {
     position: absolute;
@@ -59,60 +135,90 @@ h1 {
 }
 
 .cellValue span {
-    display: inline-block;
+    /* display: inline-block; */
     width: 100%;
     position: absolute;
     top: 12.5%;
     text-align: center;
-    font-size: 2rem;
+    font-size: 40px;
 }
 
 
 .pencilGrid {
     position: absolute;
+    padding: 2px;
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
     top: 0;
     left: 0;
     height: 100%;
     width: 100%;
-    line-height: 33.33%;
 }
 
 .pencilGridCell {
-    display: inline-block;
-    position: relative;
-    height: 33.33%;
-    width: 33.33%;
-}
-
-.pencilGridCell:hover {
-    /* background-color: #ddeeff; */
-}
-
-
-
-.startValue {
-    font-weight: 700;
-}
-
-.userValue {
-    font-color: #3232aa;
-}
-
-.errorValue {
-    background-color: #ff8888;
-}
-
-.errorValue:hover {
-    background-Color: #ffbbbb;
-}
-
-.errorValue.userValue {
-    font-color: red;
-}
-
-
-
-.flex-container {
     display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+    height: 33.33%;
+    min-width: 33.33%;
+    font-size: 14px;
+    color: var(--notesColor);
 }
 
+
+
+/* Timer */
+
+.timer-container {
+    margin-bottom: 30px;
+    font-size: 3rem;
+}
+
+/* User Panel */
+
+button {
+    margin: 10px auto;
+    width: 100%;
+    font-size: 1.2em;
+    padding: 5px;
+}
+
+#onOff {
+    color: white;
+    background-color: #aa3333;
+    border-radius: 3px;
+    padding: 3px;
+}
+
+.userPanel {
+    flex-direction: column;
+}
+
+.numberHighlightGrid {
+    height: 200px;
+    width: 200px;
+    border: 1px solid gray;
+    border-collapse: collapse;
+    box-sizing: border-box;
+}
+
+.numbersRow {
+    height: 33.33%;
+}
+
+.numbersCell {
+    width: 33.33%;
+    border: 1px solid gray;
+    text-align: center;
+    font-size: 36px;
+}
+
+.numbersCell:hover {
+    background-color: var(--cellHoverColor);
+}
+
+.numbersCell.numbersCellSelected {
+    background-color: var(--cellSelectColor);
+}
