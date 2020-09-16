@@ -1,5 +1,6 @@
 // TO DO:
 // -create "log" array to track steps, implement ctrl z & undo button
+// -track table progress in cache to continue later
 // -change features to on/off options:
 //    -show errors
 //    -update notes
@@ -235,6 +236,18 @@ function initPanel() {
     }
 }
 
+//save/load data from local storage
+function storeData() {
+    let storedTable = localStorage.getItem('sudokuTable');
+
+}
+
+function loadData() {
+    if(localStorage.getItem('sudokuTable')) {
+
+    }
+}
+
 //*******************************//
 //*******************************//
 
@@ -255,77 +268,6 @@ function initPanel() {
 //         return
 //     }
 // }
-
-
-
-
-function findFewestAvailableNumbers() { //returns an optional cell
-    var fewestAvailable = 10;
-    var nextCell = null;
-
-    function searchCells(count=0) {
-        //requres "fewestAvailable" and "nextCell" variables to exist.
-        //should only be called inside findFewestAvailable Numbers.
-        //call with count = 0;
-        let row = (count/9 >>0); let col = count%9;
-        let cell = getCell(row, col);
-        if(cell) {
-            if (!getCellValue(row, col)) { //if cell is empty, check available numbers list.
-                // console.log("row: " + row + ", col: " + col);
-                // console.log(cell.availableNumbers);
-                if (cell.availableNumbers.length < fewestAvailable) {
-                    nextCell = cell;
-                    fewestAvailable = cell.availableNumbers.length;
-                }
-            }
-            searchCells(count+1);
-        } else {
-            return;
-        }
-    }
-
-    searchCells();
-
-    return nextCell;
-}
-
-
-function initAvailableNumbersArray() {
-    for (let row = 0; row < 9; row++) {
-        for (let col = 0; col < 9; col++){
-            let cell = getCell(row,col);
-            cell.availableNumbers = [];
-            for (let num = 1; num <=9; num++) {
-                cell.availableNumbers.push(num);
-            }
-        }
-    }
-}
-
-function setInitialAvailableNumbers(count=0) {
-    //loop through filled cells, and apply value to other cells
-    let row = (count/9 >>0); let col = count%9;
-    let cell = getCell(row, col);
-
-    if(cell) {
-        let cellValue = getCellValue(row,col);
-        if (cellValue) { //for any cells that are not empty...
-            forEachRelated(cell, (x,y) => {
-                let relatedCell = getCell(x,y);
-                let index = relatedCell.availableNumbers.indexOf(cellValue);
-                if(index >= 0) {
-                    relatedCell.availableNumbers.splice(index,1);
-                }
-            });
-
-        }
-
-
-        setInitialAvailableNumbers(count+1); //continue recursion
-    } else {
-        return; //end recursion if cell does not exist)
-    }
-}
 
 
 function solveTable() {
