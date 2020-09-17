@@ -1,14 +1,15 @@
-const express = require("express");
+import express from "express";
 const app = express();
 
-app.use(express.static(__dirname + "/public"));
+app.use(express.static("public"));
+app.set("view engine", "ejs");
 
 
 app.get("/", (req, res) => {
-	res.render("sudoku.ejs");
+	res.render("sudoku");
 });
 
-
-app.listen(3000, () => {
-	console.log("serving on port 3000")
+let port = process.env.PORT || 3000;
+app.listen(port, () => {
+	console.log(`serving on port ${port}`)
 });

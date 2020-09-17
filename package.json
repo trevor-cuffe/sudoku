@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Currently, this is a static page sudoku puzzle web app. There is one sudoku puzzle that will load (with a couple of alternate options commented out in the code). This contains the full user interface to manually solve the sudoku puzzle, as well as a javascript method to solve automatically (\"solveTable()\").",
   "main": "app.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
