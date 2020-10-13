@@ -1,224 +1,249 @@
 :root {
-    --borderColor: black;
-    --innerBorderColor: gray;
+	--backgroundColor: white;
+	--fontColor: black;
+	--borderColor: black;
+	--innerBorderColor: gray;
 
-    --cellHoverColor: #d1e1ff;
-    --cellSelectColor: #b1d1ff;
-    --cellRelatedColor: #e1e4ec;
-    --cellMatchColor: #c1d1ff;
+	--cellHoverColor: #d1e1ff;
+	--cellSelectColor: #b1d1ff;
+	--cellRelatedColor: #e1e4ec;
+	--cellMatchColor: #c1d1ff;
 
-    --userValueColor: #3232aa;
-    --notesColor: #595959;
+	--userValueColor: #3232aa;
+	--notesColor: #595959;
 
-    --errorBGColor: #ff8888;
-    --errorBGHoverColor: #ffbbbb;
+	--errorBGColor: #ff8888;
+	--errorBGHoverColor: #ffbbbb;
 }
 
 @media (prefers-color-scheme: dark) {
-    :root {
-        --borderColor: white;
-        --innerBorderColor: lightgray;
+	:root {
+		--backgroundColor: black;
+		--fontColor: white;
+		--borderColor: white;
+		--innerBorderColor: lightgray;
 
-        --cellHoverColor: #222266;
-        --cellSelectColor: #444488;
-        --cellRelatedColor: #333333;
-        --cellMatchColor: #554488;
+		--cellHoverColor: #222266;
+		--cellSelectColor: #444488;
+		--cellRelatedColor: #333333;
+		--cellMatchColor: #554488;
 
-        --userValueColor: #aadbaa;
-        --notesColor: #d9d9d9;
-        
-        --errorBGColor: #660000;
-        --errorBGHoverColor: #883333;
-    }
+		--userValueColor: #aadbaa;
+		--notesColor: #d9d9d9;
 
-    html{
-        background-color: black;
-        color: white;
-    }
+		--errorBGColor: #660000;
+		--errorBGHoverColor: #883333;
+	}
+
+	html {
+		background-color: var(--backgroundColor);
+		color: var(--fontColor);
+	}
 }
 
-
-
-h1 {
-    text-align: center;
+.text-center {
+	text-align: center;
 }
 
 .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.difficulty-group {
+	width: 400px;
+	display: flex;
+	margin: auto;
+}
+
+.difficulty-group button.difficulty {
+	font-size: 1rem;
+	flex-basis: 1;
+	background-color: var(--backgroundColor);
+	color: var(--fontColor);
+	border: 1px solid var(--borderColor);
+
+	outline: 0;
+}
+
+.difficulty-group button.difficulty:first-of-type {
+	border-radius: 10px 0 0 10px;
+}
+
+.difficulty-group button.difficulty:last-of-type {
+	border-radius: 0 10px 10px 0;
+}
+
+.difficulty-group button.difficulty:hover {
+	background-color: var(--cellHoverColor);
+}
+
+.difficulty-group button.difficulty.selected {
+	background-color: var(--cellSelectColor);
 }
 
 .flex-vertical {
-    flex-direction: column;
+	flex-direction: column;
 }
 
-
 .gameTable {
-    width: 600px;
-    height: 600px;
-    border-collapse: collapse;
-    border: 2px solid var(--borderColor);
-    padding: 0;
-    margin: 10px 50px;
+	width: 600px;
+	height: 600px;
+	border-collapse: collapse;
+	border: 2px solid var(--borderColor);
+	padding: 0;
+	margin: 10px 50px;
 }
 
 .gameRow {
-    box-sizing: border-box;
-    height: 11.111%;
-    margin: 0;
+	box-sizing: border-box;
+	height: 11.111%;
+	margin: 0;
 }
 
-
-.gameRow:nth-of-type(3n+4) {
-    border-top: 2px solid var(--borderColor);
+.gameRow:nth-of-type(3n + 4) {
+	border-top: 2px solid var(--borderColor);
 }
 
 .gameCell {
-    box-sizing: border-box;
-    position: relative;
-    width: 11.111%;
-    border: 1px solid var(--innerBorderColor);
-    margin: 0;
+	box-sizing: border-box;
+	position: relative;
+	width: 11.111%;
+	border: 1px solid var(--innerBorderColor);
+	margin: 0;
 }
 
-.gameRow .gameCell:nth-of-type(3n+4) {
-    border-left: 2px solid var(--borderColor);
+.gameRow .gameCell:nth-of-type(3n + 4) {
+	border-left: 2px solid var(--borderColor);
 }
-
 
 /* Variable Cell Styles */
 
 .gameCell:hover {
-    background-color: var(--cellHoverColor);
+	background-color: var(--cellHoverColor);
 }
 
 .matchingCell {
-    background-color: var(--cellMatchColor);
+	background-color: var(--cellMatchColor);
 }
 
 .relatedCell {
-    background-color: var(--cellRelatedColor);
+	background-color: var(--cellRelatedColor);
 }
 
 .userValue {
-    color: var(--userValueColor);
+	color: var(--userValueColor);
 }
 
 .errorValue {
-    background-color: var(--errorBGColor);
+	background-color: var(--errorBGColor);
 }
 
 .errorValue.userValue {
-    color: red;
+	color: red;
 }
 
 .errorValue:hover {
-    background-Color: var(--errorBGHoverColor);
+	background-Color: var(--errorBGHoverColor);
 }
 
 .selectedCell {
-    background-color: var(--cellSelectColor);
+	background-color: var(--cellSelectColor);
 }
-
-
 
 /* Inner Cell Setup */
 
-
 .cellValue {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
 }
 
 .cellValue span {
-    /* display: inline-block; */
-    width: 100%;
-    position: absolute;
-    top: 12.5%;
-    text-align: center;
-    font-size: 40px;
+	/* display: inline-block; */
+	width: 100%;
+	position: absolute;
+	top: 12.5%;
+	text-align: center;
+	font-size: 40px;
 }
 
-
 .pencilGrid {
-    position: absolute;
-    padding: 2px;
-    box-sizing: border-box;
-    display: flex;
-    flex-wrap: wrap;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
+	position: absolute;
+	padding: 2px;
+	box-sizing: border-box;
+	display: flex;
+	flex-wrap: wrap;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
 }
 
 .pencilGridCell {
-    display: flex;
-    flex-direction: row;
-    align-content: center;
-    justify-content: center;
-    height: 33.33%;
-    min-width: 33.33%;
-    font-size: 14px;
-    color: var(--notesColor);
+	display: flex;
+	flex-direction: row;
+	align-content: center;
+	justify-content: center;
+	height: 33.33%;
+	min-width: 33.33%;
+	font-size: 14px;
+	color: var(--notesColor);
 }
-
-
 
 /* Timer */
 
 .timer-container {
-    margin-bottom: 30px;
-    font-size: 3rem;
+	margin-bottom: 30px;
+	font-size: 3rem;
 }
 
 /* User Panel */
 
 button {
-    margin: 10px auto;
-    width: 100%;
-    font-size: 1.2em;
-    padding: 5px;
+	margin: 10px auto;
+	width: 100%;
+	font-size: 1.2em;
+	padding: 5px;
 }
 
 #onOff {
-    color: white;
-    background-color: #aa3333;
-    border-radius: 3px;
-    padding: 3px;
+	color: white;
+	background-color: #aa3333;
+	border-radius: 3px;
+	padding: 3px;
 }
 
 .userPanel {
-    flex-direction: column;
+	flex-direction: column;
 }
 
 .numberHighlightGrid {
-    height: 200px;
-    width: 200px;
-    border: 1px solid gray;
-    border-collapse: collapse;
-    box-sizing: border-box;
+	height: 200px;
+	width: 200px;
+	border: 1px solid gray;
+	border-collapse: collapse;
+	box-sizing: border-box;
 }
 
 .numbersRow {
-    height: 33.33%;
+	height: 33.33%;
 }
 
 .numbersCell {
-    width: 33.33%;
-    border: 1px solid gray;
-    text-align: center;
-    font-size: 36px;
+	width: 33.33%;
+	border: 1px solid gray;
+	text-align: center;
+	font-size: 36px;
 }
 
 .numbersCell:hover {
-    background-color: var(--cellHoverColor);
+	background-color: var(--cellHoverColor);
 }
 
 .numbersCell.numbersCellSelected {
-    background-color: var(--cellSelectColor);
+	background-color: var(--cellSelectColor);
 }

@@ -10,6 +10,7 @@
 
 //Create DOM variables
 const gameTable = document.querySelector(".gameTable");
+const difficultyButtons = document.querySelectorAll("#difficultyButtons button.difficulty");
 const userPanel = document.querySelector(".userPanel");
 const newGameButton = document.querySelector("#newGame");
 const notesButton = document.querySelector("#pencilNotes");
@@ -23,63 +24,78 @@ let selectedCell;
 let selectedNumber;
 let matchingNumberCells = [];
 let notesModeIsOn = false;
+let didWin = false;
+let difficultyLevel = 0;
+
+let startingTables = [
+
+    //Easy
+    [
+        [null, 6, null, null, 1, null, null, null, 4],
+        [null, 8, null, null, 9, null, 2, null, null],
+        [4, null, null, null, null, null, 6, 1, 3],
+        [5, null, 7, 4, 6, null, 8, 3, 2],
+        [null, 2, 4, null, 3, 5, null, 9, 6],
+        [null, 3, 6, 2, null, null, 7, null, null],
+        [6, null, null, 1, 5, null, 4, 2, null],
+        [null, 4, 5, null, null, null, 3, 7, null],
+        [null, null, 8, null, null, 7, null, null, null]
+    ],
+    //Medium
+    [
+        [null, 6, null, null, null, null, 7, 3, null],
+        [null, null, 4, null, 2, 8, null, null, null],
+        [null, null, null, null, null, 3, null, null, 9],
+        [5, null, null, null, 7, null, null, null, 4],
+        [null, null, null, null, null, 1, null, null, 7],
+        [8, null, 7, null, 4, null, null, 6, 3],
+        [7, 5, null, null, 8, null, 9, null, null],
+        [null, null, null, 3, null, 6, 4, null, null],
+        [4, null, 6, 1, null, 7, null, null, 2]
+    ],
+    //Hard
+    [
+        [null, 6, null, null, null, null, null, 1, null],
+        [7, null, 1, null, null, null, null, null, 4],
+        [null, null, 3, 9, null, null, null, null, null],
+        [6, null, 9, null, null, null, null, null, 5],
+        [null, 5, null, null, null, 9, 7, 2, null],
+        [null, 7, null, 2, null, 6, null, null, null],
+        [null, null, 6, null, 3, null, null, null, null],
+        [9, null, null, 7, null, null, 5, 3, null],
+        [null, null, null, null, 9, null, 1, null, null]
+    ],
+    //Expert
+    [
+        [null, 7, null, null, null, null, null, 9, null],
+        [null, null, 9, null, null, 3, null, 1, null],
+        [5, 6, null, null, 2, 8, null, null, null],
+        [null, null, null, 6, null, null, null, null, 1],
+        [null, null, null, null, 4, null, null, null, null],
+        [2, 5, null, null, 3, null, null, 6, null],
+        [8, null, null, null, 5, null, 9, null, null],
+        [null, null, null, null, 9, null, null, 2, null],
+        [null, null, 6, null, null, null, null, 7, null]
+    ]
 
 
-// Expert2
-let startingTable = [
-    [null, 7, null, null, null, null, null, 9, null],
-    [null, null, 9, null, null, 3, null, 1, null],
-    [5, 6, null, null, 2, 8, null, null, null],
-    [null, null, null, 6, null, null, null, null, 1],
-    [null, null, null, null, 4, null, null, null, null],
-    [2, 5, null, null, 3, null, null, 6, null],
-    [8, null, null, null, 5, null, 9, null, null],
-    [null, null, null, null, 9, null, null, 2, null],
-    [null, null, 6, null, null, null, null, 7, null]
 ]
-
-
-// // Expert
-// let startingTable = [
-//     [null, 4, null, 8, null, null, 1, null, null],
-//     [6, null, 2, null, null, null, null, null, null],
-//     [null, null, null, null, null, 9, null, null, null],
-//     [1, 9, null, null, 5, null, 4, null, 7],
-//     [null, null, null, 4, null, null, null, 1, null],
-//     [5, null, null, null, null, null, null, null, null],
-//     [null, null, null, null, 9, 6, 8, null, null],
-//     [null, null, null, null, null, 3, null, null, 6],
-//     [2, 7, null, null, null, null, null, 4, null]
-// ]
-
-// //HARD
-// let startingTable = [
-//     [null, 6, null, null, null, null, null, 1, null],
-//     [7, null, 1, null, null, null, null, null, 4],
-//     [null, null, 3, 9, null, null, null, null, null],
-//     [6, null, 9, null, null, null, null, null, 5],
-//     [null, 5, null, null, null, 9, 7, 2, null],
-//     [null, 7, null, 2, null, 6, null, null, null],
-//     [null, null, 6, null, 3, null, null, null, null],
-//     [9, null, null, 7, null, null, 5, 3, null],
-//     [null, null, null, null, 9, null, 1, null, null]
-// ]
 
 
 
 init();
 
 
-//*******************************//
+// ***************************** //
 //***** Table Setup Methods *****//
-//*******************************//
+// ***************************** //
 
 function init() {
     includeFillRange(); //add a custom method to the Array prototype
     initPanel();
     initGameTable();
-    // createNewTable();
     fillTable();
+    initDifficultyBar();
 
     //set click & keypress handlers
     document.onkeydown = keyDown;
@@ -96,10 +112,6 @@ function init() {
 
 //setup HTML (gameTable)
 function initGameTable() {
-
-    //panel button event listeners
-    newGameButton.addEventListener("click", newGame);
-    notesButton.addEventListener("click", togglePencilGrid);
 
     //set new row 9x
     for(let i=0; i<9; i++) {
@@ -151,11 +163,13 @@ function fillTable() {
     //     }
     // }
 
+    let newGameTable = startingTables[difficultyLevel];
+
     //Preset Table
     for (let i = 0; i < 9; i++) {
         for (let j = 0; j < 9; j++) {
             let cell = getCell(i,j);
-            let value = startingTable[i][j];
+            let value = newGameTable[i][j];
             if(value) {
                 setCellValue(i, j, value);
                 cell.classList.add("startValue");
@@ -165,6 +179,16 @@ function fillTable() {
         }
     }
 };
+
+function initDifficultyBar() {
+    difficultyButtons[0].classList.add("selected");
+    difficultyButtons.forEach( (item, level) => {
+        item.addEventListener('click', () => {
+            setDifficulty(level);
+        });
+    });
+}
+
 
 function createNewTable() {
     //requires custom array prototype method "fillRange"
@@ -206,10 +230,12 @@ function createNewTable() {
         }
     }
 
-    //set up startingTable with newTable values
-    for (let i = 0; i < newTable.length; i++){
-        startingTable[i] = newTable[i].slice();
-    }
+
+    return newTable;
+    // //set up startingTable with newTable values
+    // for (let i = 0; i < newTable.length; i++){
+    //     startingTable[i] = newTable[i].slice();
+    // }
 
 
 }
@@ -217,6 +243,10 @@ function createNewTable() {
 //Setup User Panel:
 function initPanel() {
 
+    //panel button event listeners
+    newGameButton.addEventListener("click", newGame);
+    notesButton.addEventListener("click", togglePencilGrid);
+    
     let numberGrid = userPanel.querySelector("table.numberHighlightGrid");
 
     for (let i = 0; i < 3; i++) {
@@ -238,7 +268,7 @@ function initPanel() {
 
 //save/load data from local storage
 function storeData() {
-    let storedTable = localStorage.getItem('sudokuTable');
+    let storedTable = localStorage.setItem('sudokuTable', gameTable);
 
 }
 
@@ -248,12 +278,27 @@ function loadData() {
     }
 }
 
-//*******************************//
-//*******************************//
+function resetGameTable() {
+    for (let i = 0; i < 9; i++) {
+        for (let j = 0; j < 9; j++) {
+            let cell = getCell(i,j);
+            if(cell.classList.contains("startValue")) {
+                cell.classList.remove("startValue");
+            } else {
+                cell.classList.remove("userValue");
+            }
+            clearCell(i,j);
+            clearNotes(cell);
+        }
+    }
+}
+
+// ****************************** //
+// ****************************** //
 
 
 //***** Other Top Level Functions *****//
-//*************************************//
+// *********************************** //
 
 // //Testing recursive function
 // function fillTableWithEx(index) {
@@ -512,12 +557,29 @@ function solveTable() {
 
 
 
-//*************************************//
-//*************************************//
+// ************************************* //
+// ************************************* //
 
 
 
 //*** Event Listener Methods ***//
+
+function setDifficulty(level) {
+    if(timerMinutes.innerText>0 || timerSeconds.innerText>5) {
+        let answer = confirm("Would you like to reset the game?");
+        if (!answer) {
+            return;
+        }
+    }
+    difficultyButtons[difficultyLevel].classList.remove("selected");
+    difficultyLevel = level;
+    difficultyButtons[difficultyLevel].classList.add("selected");
+
+    resetGameTable();
+    fillTable();
+    resetTimer();
+}
+
 function cellClicked() {
     let cell = deselectCell();
     if (this === cell) {return} //if selection is same as previous, deselect and break
@@ -577,9 +639,11 @@ function keyDown(event) {
     console.log("Keypress CODE: " + code);
 }
 
-function newGame() {
-    let newGameConfirmation = confirm("Are you sure you would like to reset the game?");
-    if (!newGameConfirmation) {return}
+function newGame(confirmation = false) {
+    if(confirmation != true) {
+        let newGameConfirmation = confirm("Are you sure you would like to reset the game?");
+        if (!newGameConfirmation) {return}
+    }
 
     deselectCell(selectedCell);
     for (let i = 0; i < 9; i++) {
@@ -647,6 +711,7 @@ function inputCellValue(cell, num) {
 
 //select a cell
 function selectCell(cell) {
+    if(didWin) return;
     selectedCell = cell;
     cell.classList.add("selectedCell");
     formatRelatedCells(selectedCell);
@@ -902,6 +967,8 @@ function checkForWin() {
         count++;
     }
     if (couldWin === true) {
+        didWin = true;
+        deselectCell();
         stopTimer();
         setTimeout(() => {
             alert("Congratulations, you won!");
