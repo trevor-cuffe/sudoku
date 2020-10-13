@@ -291,6 +291,8 @@ function resetGameTable() {
             clearNotes(cell);
         }
     }
+
+    didWin = false;
 }
 
 // ****************************** //
@@ -578,6 +580,7 @@ function setDifficulty(level) {
     resetGameTable();
     fillTable();
     resetTimer();
+    stopTimer();
 }
 
 function cellClicked() {
