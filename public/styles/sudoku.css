@@ -291,6 +291,7 @@
 	.numbersRow {
 		display: inline-flex;
 		width: 33.3%;
+		height: 100%;
 	}
 
 	#pencilNotes {
@@ -303,7 +304,7 @@
 
 	.userPanel button {
 		flex: 1 1;
-		margin: 0 10px 5px;
+		margin: 0 10px 3vw;
 		max-width: 30%;
 		padding: 0.5em;
 		font-size: min(1em, 6vw);
