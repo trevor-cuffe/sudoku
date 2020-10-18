@@ -255,13 +255,22 @@
 		flex-direction: column;
 	}
 
+	#difficultyButtons {
+		max-width: 90vw;
+		margin-bottom: 3vw;
+	}
+
+	.gameTable {
+		margin-top: 3vw;
+		margin-bottom: 3vw;
+	}
+
 	.side-panel {
-		padding: 20px 0;
+		margin: 2vw 0;
 	}
 
 	.timer-container {
 		order: 2;
-		margin-top: 30px;
 	}
 
 	.userPanel {
@@ -276,7 +285,7 @@
 		width: 100%;
 		height: 100%;
 		border: none;
-		margin-bottom: 10px;
+		margin-bottom: 4vw;
 	}
 
 	.numbersRow {
@@ -294,8 +303,9 @@
 
 	.userPanel button {
 		flex: 1 1;
-		margin: 10px;
+		margin: 0 10px 5px;
 		max-width: 30%;
+		padding: 0.5em;
 		font-size: min(1em, 6vw);
 	}
 }
