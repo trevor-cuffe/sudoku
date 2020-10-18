@@ -54,12 +54,13 @@
 .difficulty-group {
 	width: 400px;
 	display: flex;
-	margin: auto;
+	margin: 10px auto 20px;
 }
 
 .difficulty-group button.difficulty {
 	font-size: 1rem;
 	flex-basis: 1;
+	flex-grow: 1;
 	background-color: var(--backgroundColor);
 	color: var(--fontColor);
 	border: 1px solid var(--borderColor);
@@ -83,13 +84,13 @@
 	background-color: var(--cellSelectColor);
 }
 
-.flex-vertical {
+.side-panel {
 	flex-direction: column;
 }
 
 .gameTable {
-	width: 600px;
-	height: 600px;
+	width: min(600px, 90vw);
+	height: min(600px, 90vw);
 	border-collapse: collapse;
 	border: 2px solid var(--borderColor);
 	padding: 0;
@@ -168,7 +169,7 @@
 	position: absolute;
 	top: 12.5%;
 	text-align: center;
-	font-size: 40px;
+	font-size: 2.5rem;
 }
 
 .pencilGrid {
@@ -190,7 +191,7 @@
 	justify-content: center;
 	height: 33.33%;
 	min-width: 33.33%;
-	font-size: 14px;
+	font-size: 0.875rem;
 	color: var(--notesColor);
 }
 
@@ -203,8 +204,8 @@
 
 /* User Panel */
 
-button {
-	margin: 10px auto;
+.userPanel button {
+	margin: 10px 0;
 	width: 100%;
 	font-size: 1.2em;
 	padding: 5px;
@@ -219,6 +220,7 @@ button {
 
 .userPanel {
 	flex-direction: column;
+	align-items: stretch;
 }
 
 .numberHighlightGrid {
@@ -237,7 +239,7 @@ button {
 	width: 33.33%;
 	border: 1px solid gray;
 	text-align: center;
-	font-size: 36px;
+	font-size: 2rem;
 }
 
 .numbersCell:hover {
@@ -246,4 +248,60 @@ button {
 
 .numbersCell.numbersCellSelected {
 	background-color: var(--cellSelectColor);
+}
+
+@media only screen and (max-width: 900px) {
+	.container {
+		flex-direction: column;
+	}
+
+	.side-panel {
+		padding: 20px 0;
+	}
+
+	.timer-container {
+		order: 2;
+		margin-top: 30px;
+	}
+
+	.userPanel {
+		flex-wrap: wrap;
+		flex-direction: row;
+		width: 90vw;
+		max-width: 600px;
+	}
+
+	.numberHighlightGrid {
+		order: 1;
+		width: 100%;
+		height: 100%;
+		border: none;
+		margin-bottom: 10px;
+	}
+
+	.numbersRow {
+		display: inline-flex;
+		width: 33.3%;
+	}
+
+	#pencilNotes {
+		order: 2;
+	}
+
+	#newGame {
+		order: 3;
+	}
+
+	.userPanel button {
+		flex: 1 1;
+		margin: 10px;
+		max-width: 30%;
+		font-size: min(1em, 6vw);
+	}
+}
+
+@media only screen and (max-width: 800px) {
+	html {
+		font-size: 2vw;
+	}
 }
